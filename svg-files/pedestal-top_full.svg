@@ -1,0 +1,18 @@
+<svg id="pedestal-top" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 30">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #474643;
+      }
+
+      .cls-2 {
+        fill: none;
+        stroke: #000;
+        stroke-miterlimit: 10;
+      }
+    </style>
+  </defs>
+  <path id="top" class="cls-1" 
+  d="M300,15A15,15,0,0,0,286,.05V0H15a15,15,0,0,0,0,30H286V30A15,15,0,0,0,300,15Z"/>
+  <line class="cls-2" x1="15" y1="30" x2="286" y2="30"/>
+</svg>

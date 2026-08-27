@@ -1,0 +1,17 @@
+# Local dev / compare scripts
+_compare_old_pdfs.py
+_calc_check.js
+_peek_pdfs.py
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.tmp
+.cursor/
+
+# Large reference / scraped assets (not needed for the live app)
+*.pdf
+*.dwg
+Green Roof Construction Details Sponge 2+2_files/
+PHASE-1-AUDIT*.md
+pr profile specs.xlsx

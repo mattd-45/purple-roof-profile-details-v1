@@ -1,0 +1,15 @@
+<svg id="curb-2.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4796 2002">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #d1c1a1;
+      }
+    </style>
+  </defs>
+  <g id="curb-shape">
+    <path class="cls-1" d="M1642,291h-.5c-23.2,0-38.5,19.14-42,42.3l-.5,4L1575,493V600h300V291Z"/>
+  </g>
+  <g id="curb-shape-2" data-name="curb-shape">
+    <path class="cls-1" d="M1808,291h.5c23.2,0,38.5,19.14,42,42.3l.5,4L1875,493V600H1575V291Z"/>
+  </g>
+</svg>
