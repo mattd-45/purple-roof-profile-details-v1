@@ -1606,6 +1606,18 @@
     .report-summary-page .summary-aow-gallery {
       margin-top: 28px !important;
     }
+    .report-preview-scroll .report-summary-page {
+      display: flex; flex-direction: column;
+      height: calc(min(1100px, 100vw - 72px) * 11 / 8.5); overflow: hidden;
+    }
+    .report-preview-scroll .report-summary-page > * { flex: 0 0 auto; }
+    .report-preview-scroll .report-summary-page .summary-aow-gallery {
+      flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column;
+    }
+    .report-preview-scroll .report-summary-page .summary-aow-gallery > .report-page-title { flex: 0 0 auto; }
+    .report-preview-scroll .report-summary-page .aow-grid { flex: 1 1 auto; min-height: 0; }
+    .report-preview-scroll .report-summary-page .aow-card { height: 100%; }
+    .report-preview-scroll .report-summary-page .aow-img { max-height: 100%; }
     .report-summary-page .summary-aow-gallery > .report-page-title {
       margin-bottom: 14px;
     }
@@ -5389,23 +5401,23 @@ function buildSummaryAreaOfWorkGalleryHTML() {
 
   const n = imgs.length;
   const cols = n === 1 ? 1 : (n === 2 ? 2 : 3);
-  // Fill the remainder of the letter page below the summary table: a single image gets
-  // the full width and most of the remaining height; multiples share it.
-  const maxH = n <= 1 ? '5.6in' : (n <= 2 ? '3.4in' : (n <= 3 ? '2.8in' : '2.2in'));
+  const rows = Math.ceil(n / cols);
   const gap = n <= 3 ? '12px' : '10px';
-  const imgW = n <= 1 ? 'width:100%;' : 'width:100%;';
 
+  // The summary page is a fixed-height flex column (see CSS). The gallery takes whatever
+  // height remains below the summary table and the images scale to fit inside it, so the
+  // page never spills onto a second sheet regardless of image size or table length.
   let html = `<div class="summary-aow-gallery" style="margin:22px 0 0;text-align:left;">
     ${buildReportPageTitleHTML('Area of work')}
-    <div style="display:grid;grid-template-columns:repeat(${cols},minmax(0,1fr));gap:${gap};justify-items:start;align-items:start;">`;
+    <div class="aow-grid" style="display:grid;grid-template-columns:repeat(${cols},minmax(0,1fr));grid-template-rows:repeat(${rows},minmax(0,1fr));gap:${gap};">`;
 
   imgs.forEach((img) => {
     const src = String(img.src).replace(/"/g, '');
     const label = escapeReportText(img.label || 'Area of work');
-    html += `<div style="min-width:0;width:100%;max-width:100%;border:2px solid #8f8f86;background:#fff;text-align:left;">
-      <div style="padding:5px 8px;background:#f3f3ee;border-bottom:1.5px solid #8f8f86;font-size:10px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:#2D2C27;">${label}</div>
-      <div style="padding:8px;background:#fff;">
-        <img src="${src}" alt="${label}" style="display:block;margin:0 auto;max-height:${maxH};max-width:100%;${imgW}height:auto;object-fit:contain;border:1px solid #d0d0c8;background:#fff;">
+    html += `<div class="aow-card" style="min-width:0;min-height:0;border:2px solid #8f8f86;background:#fff;text-align:left;display:flex;flex-direction:column;">
+      <div style="flex:0 0 auto;padding:5px 8px;background:#f3f3ee;border-bottom:1.5px solid #8f8f86;font-size:10px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:#2D2C27;">${label}</div>
+      <div class="aow-img-wrap" style="flex:1 1 auto;min-height:0;padding:8px;background:#fff;display:flex;align-items:flex-start;justify-content:center;">
+        <img class="aow-img" src="${src}" alt="${label}" style="display:block;max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;border:1px solid #d0d0c8;background:#fff;">
       </div>
     </div>`;
   });
@@ -6162,6 +6174,18 @@ function getReportPrintCss() {
       page-break-after: auto; break-after: auto;
     }
     .report-compare-page { padding: 0 0.82in 0 0.12in; }
+    .report-summary-page {
+      display: flex; flex-direction: column;
+      height: 10.0in; max-height: 10.0in; overflow: hidden;
+    }
+    .report-summary-page > * { flex: 0 0 auto; }
+    .report-summary-page .summary-aow-gallery {
+      flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column;
+    }
+    .report-summary-page .summary-aow-gallery > .report-page-title { flex: 0 0 auto; }
+    .report-summary-page .summary-aow-gallery .aow-grid { flex: 1 1 auto; min-height: 0; }
+    .report-summary-page .aow-card { height: 100%; }
+    .report-summary-page .aow-img { max-height: 100%; }
     .report-tabs {
       position: absolute; top: 0.16in; right: 0; bottom: 0.16in; width: 0.36in; z-index: 6;
     }
