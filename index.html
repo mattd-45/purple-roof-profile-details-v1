@@ -1781,27 +1781,178 @@
       cursor: pointer;
     }
     .btn-bar-primary:hover { background: #7d8905; }
+
+    /* ═══════════════════════════════════════════════════════════════════════
+       Qualifier theme (2026-10-02) — makes this page match the Purple-Roof
+       Qualifier: Inter, same color tokens, pill buttons/tabs, rounded cards
+       with the purple rule. Screen only; the report preview and print CSS
+       are untouched. Remove this block to return to the previous look.
+       ═══════════════════════════════════════════════════════════════════════ */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+    :root {
+      --q-purple: #6B2D8B; --q-purple-dark: #4f1f6a; --q-purple-light: #f3ecf8; --q-purple-mid: #c9a9dc;
+      --q-green: #2d7a3a; --q-green-dark: #1e5c2b;
+      --q-n-900: #0f172a; --q-n-800: #1e293b; --q-n-700: #334155; --q-n-600: #475569; --q-n-500: #64748b;
+      --q-n-300: #cbd5e1; --q-n-200: #e2e8f0; --q-n-100: #f1f5f9; --q-n-50: #f8fafc;
+      --q-rule: color-mix(in srgb, var(--q-purple-mid) 38%, var(--q-n-200));
+      --q-font: Inter, 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+      --primary: var(--q-purple); --primary-soft: rgba(107,45,139,0.10); --primary-wash: rgba(107,45,139,0.07);
+      --page-bg: var(--q-n-50); --border: var(--q-n-300); --border-soft: var(--q-n-200);
+      --text-primary: var(--q-n-800); --text-secondary: var(--q-n-500);
+    }
+    body {
+      font-family: var(--q-font); font-size: 13px; color: var(--q-n-800); line-height: 1.5;
+      background:
+        radial-gradient(circle at 82% 8%, color-mix(in srgb, var(--q-purple-light) 78%, transparent) 0, transparent 34%),
+        linear-gradient(180deg, #ffffff 0%, var(--q-n-50) 46%, var(--q-n-100) 100%);
+      min-height: 100vh;
+    }
+    .report-preview, .print-sheet, #reportPrintFrame { font-family: 'Open Sans', 'Aptos', 'Segoe UI', system-ui, Arial, sans-serif; }
+
+    /* Header — same grid as the qualifier */
+    .header {
+      display: grid; grid-template-columns: auto 1fr auto; align-items: center; column-gap: 12px;
+      min-height: 64px; padding: 8px 30px; background: rgba(255,255,255,0.97);
+      position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--q-n-200);
+      box-shadow: 0 1px 0 var(--q-n-100), 0 4px 16px rgba(15,23,42,0.055); backdrop-filter: blur(16px);
+    }
+    .header::after { display: none; }
+    .header-left, .header-right { display: inline-flex; align-items: center; gap: 10px; flex-shrink: 0; }
+    .header-center { display: flex; flex-direction: column; align-items: center; gap: 2px; text-align: center; min-width: 0; }
+    .header-title { font-size: clamp(13px, 1.2vw, 16px); font-weight: 700; letter-spacing: -0.01em; color: var(--q-n-900); white-space: nowrap; line-height: 1.2; margin: 0; }
+    .header-subtitle { font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--q-n-500); font-weight: 600; margin: 0; }
+    .header-logo-pr { height: 34px; width: auto; max-width: none; display: block; background: transparent; padding: 0; border: 0; border-radius: 0; }
+    .header-left a { display: inline-flex; line-height: 0; }
+    .header-logo-sg { height: 30px; width: auto; display: block; margin: 0; }
+    .brand-lockup { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
+    .brand-lockup-rule { width: 1px; height: 26px; background: var(--q-n-200); }
+    .header-logo-lbg2 { height: 28px; width: auto; display: block; }
+    .header-toolbar { display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+    .btn-nav {
+      display: inline-flex; align-items: center; gap: 6px; padding: 7px 13px; border-radius: 999px; font-size: 12px; font-weight: 700;
+      color: var(--q-n-700); background: #fff; border: 1px solid var(--q-n-300); text-decoration: none; cursor: pointer; font-family: inherit;
+      transition: background 0.15s, border-color 0.15s, transform 0.15s;
+    }
+    .btn-nav:hover { border-color: var(--q-purple); color: var(--q-purple-dark); transform: translateY(-1px); }
+
+    /* Tabs — flat sticky band under the header, pill group inside (matches the qualifier flow bar) */
+    .tab-nav {
+      position: sticky; top: 64px; z-index: 90; display: flex; justify-content: center; gap: 4px;
+      margin: 0; padding: 8px 30px; background: rgba(255,255,255,0.985); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--q-n-200); box-shadow: 0 6px 18px rgba(15,23,42,0.05);
+    }
+    .tab-nav::before { content: ''; }
+    .tab-nav-group { display: inline-flex; gap: 4px; padding: 4px; background: var(--q-n-100); border-radius: 999px; }
+    .tab-nav button, .tab-button {
+      border: 1px solid transparent; border-radius: 999px; background: transparent; color: var(--q-n-600); cursor: pointer;
+      font-size: 10.5px; font-weight: 700; letter-spacing: 0.05em; min-height: 32px; padding: 6px 18px; text-transform: uppercase; font-family: inherit;
+      transition: background 0.18s, color 0.18s;
+    }
+    .tab-nav button:hover, .tab-button:hover { background: #fff; color: var(--q-n-800); }
+    .tab-nav button.active, .tab-button.active { background: var(--q-purple); border-color: transparent; color: #fff; box-shadow: none; }
+
+    /* Page width */
+    .tab-content { max-width: 1140px; margin: 0 auto; padding: 30px 30px 76px; }
+    .tab-content.active { display: block; }
+
+    /* Sections — cards with the purple rule */
+    .section {
+      background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(248,250,252,0.78)), #fff;
+      border: 1px solid color-mix(in srgb, var(--q-n-200) 82%, #ffffff); border-left: 1px solid var(--q-purple-mid);
+      border-radius: 14px; box-shadow: 0 4px 14px rgba(15,23,42,0.05); padding: clamp(20px, 3vw, 30px) clamp(22px, 3.4vw, 36px); margin-bottom: 24px;
+    }
+    .section-title, .section-head .section-title-text {
+      font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+      color: color-mix(in srgb, var(--q-purple-dark) 22%, var(--q-n-700));
+      border-left: 0; padding: 0 0 8px; margin: 0 0 12px; border-bottom: 1px solid var(--q-rule);
+    }
+    .section-head { border-bottom: 1px solid var(--q-rule); border-left: 0; padding: 0 0 8px; margin-bottom: 12px; }
+    .selected-count { text-transform: none; letter-spacing: 0; font-weight: 500; color: var(--q-n-500); }
+    .roof-area-slot.is-empty label { text-transform: none; letter-spacing: 0; font-weight: 600; color: var(--q-purple-dark); }
+    .section-head .section-title-text, .section-head .section-title { border-bottom: 0; padding-bottom: 0; margin-bottom: 0; }
+
+    /* Buttons — pills */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; border-radius: 999px; font-size: 12px; font-weight: 700;
+      min-height: 34px; padding: 7px 16px; font-family: inherit; transition: background 0.18s, border-color 0.18s, box-shadow 0.18s, transform 0.18s;
+    }
+    .btn-primary { background: var(--q-green); color: #fff; border: 1px solid transparent; letter-spacing: 0; }
+    .btn-primary:hover { background: var(--q-green-dark); transform: translateY(-1px); }
+    .btn-primary.btn-print { font-size: 13px; padding: 9px 20px; min-height: 40px; }
+    .btn-secondary { background: #fff; color: var(--q-n-700); border: 1px solid var(--q-n-300); font-weight: 700; }
+    .btn-secondary:hover { background: #fff; border-color: var(--q-purple); color: var(--q-purple-dark); transform: translateY(-1px); }
+    .btn-secondary:disabled { opacity: .5; transform: none; cursor: not-allowed; }
+    .btn-danger { border-radius: 999px; }
+
+    /* Inputs */
+    .field-input, .form-group input, .form-group select, .form-group textarea, .roof-areas-table input, .settings-table input {
+      font-family: inherit; font-size: 13px; padding: 7px 12px; min-height: 34px; color: var(--q-n-800);
+      border: 1px solid color-mix(in srgb, var(--q-n-300) 82%, #ffffff); border-radius: 10px; background: rgba(255,255,255,0.92);
+      box-shadow: 0 1px 0 rgba(255,255,255,0.75) inset; transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
+    }
+    .field-input:focus, .form-group input:focus, .form-group select:focus, .form-group textarea:focus, .roof-areas-table input:focus {
+      outline: none; border-color: #3b82f6; background: #fff; box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
+    }
+    input[type="checkbox"], input[type="radio"] { accent-color: var(--q-purple); }
+    .form-group label { font-size: 12px; font-weight: 700; color: var(--q-n-700); letter-spacing: 0.03em; text-transform: uppercase; }
+
+    /* Roof area cards */
+    .roof-area-picker-card { border: 1px solid var(--q-n-300) !important; border-radius: 12px !important; background: rgba(255,255,255,0.9) !important; overflow: hidden; }
+    .roof-area-picker-card .rap-head { background: var(--q-purple-light) !important; color: var(--q-purple-dark) !important; border-bottom: 1px solid var(--q-purple-mid); }
+    .roof-area-picker-card .rap-head > div:first-child { font-size: 11px; letter-spacing: .12em; }
+    .roof-area-picker-card .rap-head span { color: var(--q-n-600); opacity: 1 !important; }
+    .roof-area-picker-card .rap-meta { background: rgba(255,255,255,0.7) !important; border-bottom: 1px solid var(--q-n-200) !important; }
+    .roof-area-slot { border-radius: 12px; border: 1px solid var(--q-n-300); gap: 10px; padding: 12px 14px; }
+    .roof-area-slot.is-empty { background: var(--q-n-50); border-style: dashed; }
+    .roof-area-slot-title { font-size: 11px; letter-spacing: .1em; }
+    .roof-area-slot label { font-size: 12px; font-weight: 700; color: var(--q-n-700); letter-spacing: 0.03em; text-transform: uppercase; }
+    .roof-area-slot .field-input { text-transform: none; letter-spacing: 0; font-weight: 500; }
+    .area-tab { border-radius: 999px; padding: 5px 12px; font-size: 11px; }
+    .area-tab.active { background: var(--q-purple); border-color: var(--q-purple); color: #fff; }
+    #qualifierBar { border-radius: 12px !important; background: var(--q-purple-light) !important; border-color: var(--q-purple-mid) !important; }
+    #reportLinkBar { border-radius: 12px !important; background: var(--q-n-50) !important; border-color: var(--q-n-200) !important; }
+
+    /* Tables on screen */
+    .comparison-table th, .lib-table th, .project-total-panel th, .roof-areas-table th, .settings-table th { font-family: inherit; }
+    .ps-group { background: var(--q-n-100); border-left-color: var(--q-purple-mid); }
+    .ps-group.sys-purple_roof { border-left-color: var(--q-purple); }
+    .modal-content { border-radius: 14px; }
+
+    /* Footer */
+    .app-footer { text-align: center; color: var(--q-n-500); font-size: 12px; padding: 18px; border-top: 1px solid var(--q-n-200); background: rgba(255,255,255,0.7); }
+    .app-footer a { color: var(--q-n-500); }
+    @media (max-width: 720px) { .header { grid-template-columns: 1fr auto; } .header-center { display: none; } .tab-content { padding: 20px 16px 60px; } }
+    @media print { .header, .tab-nav, .app-footer { display: none; } }
   </style>
 </head>
 <body>
 
 <div class="header">
   <div class="header-left">
-    <img class="header-logo-lbg" src="LBG_Logo.png" alt="Living Building Group">
-    <div class="header-text">
-      <div class="header-brand">Sempergreen USA</div>
-      <div class="header-title">Roof Profile Comparison</div>
-      <div class="header-subtitle">Parametric green roof profiles · weight &amp; cost comparison</div>
-    </div>
+    <a href="https://purple-roof-qualifier.netlify.app/" title="Purple-Roof Qualifier"><img class="header-logo-pr" src="logo-purple-roof.png" alt="Purple-Roof"></a>
+  </div>
+  <div class="header-center">
+    <div class="header-title">Roof Profile Comparison</div>
+    <div class="header-subtitle">Profiles · loads · stormwater · cost</div>
   </div>
   <div class="header-right">
-    <img class="header-logo-sg" src="LOGO_SEMPERGREEN_background.png" alt="Sempergreen">
+    <div class="header-toolbar">
+      <a href="https://purple-roof-qualifier.netlify.app/" class="btn-nav">Qualifier</a>
+      <a href="https://sempergreen-usa-resource-portal.netlify.app/" target="_blank" rel="noopener noreferrer" class="btn-nav">Resources</a>
+    </div>
+    <a class="brand-lockup" href="https://sempergreen-usa-resource-portal.netlify.app/" target="_blank" rel="noopener noreferrer" title="Sempergreen USA — a Living Building Group company">
+      <img class="header-logo-sg" src="logo-sempergreen.png" alt="Sempergreen USA">
+      <span class="brand-lockup-rule" aria-hidden="true"></span>
+      <img class="header-logo-lbg2" src="logo-lbg.png" alt="Living Building Group">
+    </a>
   </div>
 </div>
 
 <div class="tab-nav">
-  <button class="tab-button active" data-tab="project">PROJECT</button>
-  <button class="tab-button" data-tab="library">GLOBALS</button>
+  <div class="tab-nav-group">
+    <button class="tab-button active" data-tab="project">PROJECT</button>
+    <button class="tab-button" data-tab="library">GLOBALS</button>
+  </div>
 </div>
 
 <!-- ============================================================
@@ -1856,13 +2007,16 @@
       <div style="display:flex; align-items:center; gap:6px; min-height:32px; grid-column:1/-1; border-top:1px solid #eee; padding-top:6px; margin-top:2px;">
         <label style="font-size:11px; color:#666; white-space:nowrap; width:110px; flex-shrink:0;">Show costs as</label>
         <label style="display:flex;align-items:center;gap:4px;cursor:pointer;font-size:12px;">
-          <input type="radio" name="pricingMode" id="pricingDirect" value="direct" checked style="accent-color:#91A206;"> Direct
+          <input type="radio" name="pricingMode" id="pricingDirect" value="direct" checked style="accent-color:#6B2D8B;"> Direct
         </label>
         <label style="display:flex;align-items:center;gap:4px;cursor:pointer;font-size:12px; margin-left:8px;">
           <input type="radio" name="pricingMode" id="pricingSSW" value="ssw" style="accent-color:#6B2D8B;"> SSW
         </label>
         <label style="display:flex;align-items:center;gap:4px;cursor:pointer;font-size:12px; margin-left:8px;">
           <input type="radio" name="pricingMode" id="pricingBoth" value="both" style="accent-color:#1A6FA8;"> Both
+        </label>
+        <label style="display:flex;align-items:center;gap:4px;cursor:pointer;font-size:12px; margin-left:8px;" title="Report omits all costs, rates, markups, and pricing language. Weights and stormwater are kept.">
+          <input type="radio" name="pricingMode" id="pricingNone" value="none" style="accent-color:#C62828;"> None
         </label>
         <span style="display:none;" id="pricingModeNote"></span>
       </div>
@@ -1877,11 +2031,11 @@
       </div>
       <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
         <label style="display:flex; align-items:center; gap:6px; font-size:12px; font-weight:600; color:#2D2C27; cursor:pointer; white-space:nowrap;">
-          <input type="checkbox" id="includeNycDepStorage" style="accent-color:#91A206;">
+          <input type="checkbox" id="includeNycDepStorage" style="accent-color:#6B2D8B;">
           NYC DEP storage
         </label>
         <label style="display:flex; align-items:center; gap:6px; font-size:12px; font-weight:600; color:#2D2C27; cursor:pointer; white-space:nowrap;">
-          <input type="checkbox" id="includeProjectScopeImage" style="accent-color:#91A206;">
+          <input type="checkbox" id="includeProjectScopeImage" style="accent-color:#6B2D8B;">
           Area of work image
         </label>
         <button class="btn btn-secondary" id="copyReportLinkBtn" type="button">Copy report link</button>
@@ -1894,6 +2048,12 @@
         <span id="projectScopeImagePreview" style="display:flex; flex-wrap:wrap; gap:10px; align-items:center;"></span>
       </div>
       <div style="font-size:11px; color:#777; margin-top:6px; line-height:1.35;">One roof-plan image for the whole report (instead of a snip per roof area). Prints top-right on comparison pages.</div>
+    </div>
+    <div id="qualifierBar" style="display:none; margin-bottom:10px; padding:10px 12px; background:#efe9f5; border:1px solid #cdbfe0; border-radius:3px; font-size:12px; line-height:1.5;">
+      <strong>Opened from the Purple-Roof Qualifier.</strong> Roof areas and the preliminary profile were loaded from the qualifier project.
+      Change the alternates here if you want to, then
+      <button class="btn btn-secondary" id="qualifierReturnBtn" type="button" style="margin-left:6px;">Return to the Qualifier with this selection &rarr;</button>
+      <div id="qualifierReturnNote" style="font-size:11px; color:#666; margin-top:4px;"></div>
     </div>
     <div id="reportLinkBar" style="display:none; margin-bottom:10px; padding:8px 10px; background:#f3f3ee; border:1px solid #e4e4de; border-radius:3px; font-size:12px; line-height:1.45;">
       Full report (project saved in URL):
@@ -2018,7 +2178,7 @@
         <tr class="data-row">
           <td style="font-weight:500;">Include Pricing in Reports</td>
           <td style="color:#888; font-size:11px;">Report settings</td>
-          <td><input type="checkbox" id="includePricingReports" checked style="accent-color:#91A206;"></td>
+          <td><input type="checkbox" id="includePricingReports" checked style="accent-color:#6B2D8B;"></td>
           <td style="font-size:10px; color:#888;"></td>
         </tr>
         <tr class="data-row">
@@ -3311,6 +3471,7 @@ let selectedProfileIds = new Set();
 let projectCostOverrides = {};
 let pricingMode = 'direct'; // 'direct' | 'ssw' | 'both'
 let includeNycDepStorage = false;
+let excludePricing = false; // when true, the report omits all costs, rates, markups, and pricing language
 let includeProjectScopeImage = false;
 let projectScopeImageData = '';
 let projectScopeImageName = '';
@@ -3989,7 +4150,7 @@ function applyProjectFormData(project) {
 function applyPricingModeToUI(mode) {
   if (mode !== 'direct' && mode !== 'ssw' && mode !== 'both') return;
   pricingMode = mode;
-  const pricingRadio = document.querySelector(`input[name="pricingMode"][value="${pricingMode}"]`);
+  const pricingRadio = document.querySelector(`input[name="pricingMode"][value="${excludePricing ? 'none' : pricingMode}"]`);
   if (pricingRadio) pricingRadio.checked = true;
   const note = document.getElementById('pricingModeNote');
   if (note) {
@@ -4011,6 +4172,7 @@ function scheduleAutoSave() {
 }
 
 async function init() {
+  captureQualifierLink();
   loadFromStorage();
   initExtendedMaterialProps();  // populate price/rate fields if not saved
   loadCoverAssemblyImage();
@@ -4041,9 +4203,10 @@ async function init() {
       } catch (e) { /* ignore */ }
       const areas = getReportAreas();
       const total = areas.reduce((n, a) => n + a.profiles.length, 0);
-      if (total > 0) showReportPreview();
+      if (total > 0 && !qualifierLink) showReportPreview();
     }, 80);
   }
+  renderQualifierBar();
 }
 
 function setTodayDate() {
@@ -4113,6 +4276,9 @@ function loadFromStorage() {
     if (typeof data.includeNycDepStorage === 'boolean') {
       includeNycDepStorage = data.includeNycDepStorage;
     }
+    if (typeof data.excludePricing === 'boolean') {
+      excludePricing = data.excludePricing;
+    }
     if (typeof data.includeProjectScopeImage === 'boolean') {
       includeProjectScopeImage = data.includeProjectScopeImage;
     }
@@ -4134,6 +4300,7 @@ function loadFromStorage() {
   if (prepProj && !prepProj.value) prepProj.value = globalSettings.reportPreparedBy || 'Matt Draus';
   applyPricingModeToUI(pricingMode);
   syncNycDepStorageUI();
+  syncExcludePricingUI();
   syncProjectScopeImageUI();
   syncSingleRoofAreaInput();
 }
@@ -4151,6 +4318,7 @@ function saveToStorage() {
     activeAreaId,
     pricingMode,
     includeNycDepStorage,
+    excludePricing,
     includeProjectScopeImage,
     projectScopeImageData,
     projectScopeImageName,
@@ -4198,6 +4366,7 @@ function collectSharePayload() {
     activeAreaId,
     pricingMode,
     includeNycDepStorage,
+    excludePricing,
     includeProjectScopeImage,
     // Image data is too large for share URLs — keep flag only
     project: collectProjectFormData()
@@ -4246,6 +4415,9 @@ function applySharePayload(data) {
   }
   if (typeof data.includeNycDepStorage === 'boolean') {
     includeNycDepStorage = data.includeNycDepStorage;
+  }
+  if (typeof data.excludePricing === 'boolean') {
+    excludePricing = data.excludePricing;
   }
   if (typeof data.includeProjectScopeImage === 'boolean') {
     includeProjectScopeImage = data.includeProjectScopeImage;
@@ -4309,12 +4481,63 @@ function applySharePayload(data) {
 
   applyPricingModeToUI(pricingMode);
   syncNycDepStorageUI();
+  syncExcludePricingUI();
   syncProjectScopeImageUI();
 
   syncSingleRoofAreaInput();
   initExtendedMaterialProps();
 
   return true;
+}
+
+// ── Purple-Roof Qualifier link ──────────────────────────────────────────────
+// The qualifier opens this page as #s=<share token>&q=<project id>&qr=<qualifier url>.
+// q / qr are captured once here because "Copy report link" later rewrites the hash.
+let qualifierLink = null; // { projectId, returnUrl }
+function captureQualifierLink() {
+  try {
+    const hash = (location.hash || '').replace(/^#/, '');
+    const hp = hash.includes('=') ? new URLSearchParams(hash) : new URLSearchParams();
+    const q = new URLSearchParams(location.search);
+    const projectId = hp.get('q') || q.get('q');
+    if (!projectId) return null;
+    qualifierLink = { projectId, returnUrl: hp.get('qr') || q.get('qr') || '' };
+    return qualifierLink;
+  } catch (e) { return null; }
+}
+function qualifierSelectedProfileIds() {
+  syncAllAreaSlots();
+  const ids = [];
+  getEnabledRoofAreas().forEach(a => {
+    const list = [a.alt1Id, a.alt2Id, ...(a.alternateIds || []), ...(a.selectedIds || [])].filter(Boolean);
+    const pr = list.find(id => /^PR-/.test(id));
+    if (pr) ids.push(pr);
+  });
+  return ids.filter((v, i, arr) => arr.indexOf(v) === i);
+}
+function buildQualifierReturnUrl() {
+  if (!qualifierLink || !qualifierLink.returnUrl) return '';
+  const ids = qualifierSelectedProfileIds();
+  const base = qualifierLink.returnUrl;
+  const sep = base.includes('?') ? '&' : '?';
+  return base + sep + 'open=' + encodeURIComponent(qualifierLink.projectId) + (ids.length ? '&profiles=' + encodeURIComponent(ids.join(',')) : '');
+}
+function renderQualifierBar() {
+  const bar = document.getElementById('qualifierBar');
+  if (!bar) return;
+  if (!qualifierLink) { bar.style.display = 'none'; return; }
+  bar.style.display = '';
+  const btn = document.getElementById('qualifierReturnBtn');
+  const note = document.getElementById('qualifierReturnNote');
+  const ids = qualifierSelectedProfileIds();
+  if (note) note.textContent = ids.length ? ('Will send back: ' + ids.join(', ') + ' (first Purple-Roof profile per roof area, in order).') : 'Select a Purple-Roof profile as an alternate to send it back.';
+  if (btn) {
+    btn.disabled = !qualifierLink.returnUrl;
+    btn.onclick = () => {
+      const url = buildQualifierReturnUrl();
+      if (url) location.href = url;
+    };
+  }
 }
 
 function getShareTokenFromLocation() {
@@ -4787,7 +5010,9 @@ function buildReportComparisonTableHTML(profiles, roofArea, roleMap, baselineId)
     });
   }
 
-  if (pricingMode === 'direct') {
+  if (excludePricing) {
+    // no cost rows
+  } else if (pricingMode === 'direct') {
     rows.push({ label: 'F&I Direct $/SF', key: 'fiDirectSf', format: (v) => `$${v.toFixed(2)}`, strong: true });
     rows.push({ label: 'Installed Total', key: 'totalCostDirect', format: (v) => `$${v.toLocaleString('en-US', {maximumFractionDigits: 0})}`, strong: true });
   } else if (pricingMode === 'ssw') {
@@ -4858,7 +5083,9 @@ function buildReportComparisonTableHTML(profiles, roofArea, roleMap, baselineId)
       let val = calc[row.key];
       let content = '';
       if (row.type === 'badge') {
-        content = systemTypeBadgeHTML(val || calc.systemType || 'unknown', { height: 14, maxWidth: 110 });
+        // Text only — the wordmark already appears in the column header above
+        const stKey = val || calc.systemType || 'unknown';
+        content = `<span style="font-size:11px;font-weight:700;color:${typeColors[stKey] || '#555'};">${typeLabels[stKey] || String(stKey).replace(/_/g, ' ')}</span>`;
       } else if (row.type === 'perf') {
         content = val
           ? '<span class="perf-yes" style="color:#1B5E20;font-weight:700;font-size:12px;">✓</span>'
@@ -4879,6 +5106,7 @@ function buildReportComparisonTableHTML(profiles, roofArea, roleMap, baselineId)
     : profiles[0];
   const baselineIdx = baselineProfile ? profiles.findIndex(p => p.id === baselineProfile.id) : 0;
   const baselineCalc = profileCalcs[baselineIdx >= 0 ? baselineIdx : 0];
+  if (!excludePricing) {
   html += `<tr class="cmp-delta"><td class="cmp-label" style="font-weight:700; color:#333;">Δ vs Baseline</td>`;
   profileCalcs.forEach((calc, idx) => {
     if (!baselineCalc || profiles[idx].id === baselineProfile?.id) {
@@ -4890,7 +5118,9 @@ function buildReportComparisonTableHTML(profiles, roofArea, roleMap, baselineId)
       html += `<td class="cmp-val" style="text-align:center;"><span style="color:${deltaCost >= 0 ? '#d9181c' : '#52C41A'}; font-weight:700;">${sign}$${Math.abs(deltaCost).toLocaleString('en-US', {maximumFractionDigits: 0})} (${sign}${deltaPercent.toFixed(1)}%)</span></td>`;
     }
   });
-  html += '</tr></tbody></table>';
+  html += '</tr>';
+  }
+  html += '</tbody></table>';
   if (includeNycDepStorage) {
     html += `<div style="margin-top:6px;font-size:10px;color:#666;line-height:1.35;">${getEstimatedStorageFootnoteHTML()}</div>`;
   }
@@ -5013,6 +5243,7 @@ function buildCoverProjectSummaryTableHTML(areas, opts = {}) {
   const roomy = !!opts.roomy;
   const modeLabel = pricingMode === 'ssw' ? 'SSW' : 'Direct';
   const showStorage = !!includeNycDepStorage;
+  const showCost = !excludePricing;
   const money = (n) => (n != null && !isNaN(n)) ? ('$' + Math.round(n).toLocaleString('en-US')) : '—';
   const fs = roomy ? '12px' : '11px';
   const thFs = roomy ? '11px' : '10px';
@@ -5069,9 +5300,9 @@ function buildCoverProjectSummaryTableHTML(areas, opts = {}) {
       <td style="${tdR}">${sf}</td>
       <td style="${td}font-weight:600;color:#2D2C27;">${escapeReportText(baseName)}</td>
       <td style="${td}color:#555;">${escapeReportText(altNames)}</td>
-      <td style="${tdR}">${money(r.baselineCost)}</td>
+      ${showCost ? `<td style="${tdR}">${money(r.baselineCost)}</td>
       <td style="${tdR}">${money(r.alternateCost)}</td>
-      <td style="${tdR}">${deltaHtml}</td>
+      <td style="${tdR}">${deltaHtml}</td>` : ''}
       ${showStorage ? `<td style="${tdR}">${retCell}</td><td style="${tdR}">${detCell}</td>` : ''}
     </tr>`;
   });
@@ -5098,9 +5329,9 @@ function buildCoverProjectSummaryTableHTML(areas, opts = {}) {
     <td style="${tdR}font-weight:800;">${pkg.totalSF > 0 ? pkg.totalSF.toLocaleString('en-US') : '—'}</td>
     <td style="${td}"></td>
     <td style="${td}"></td>
-    <td style="${tdR}font-weight:800;">${money(pkg.baselineTotal)}</td>
+    ${showCost ? `<td style="${tdR}font-weight:800;">${money(pkg.baselineTotal)}</td>
     <td style="${tdR}font-weight:800;">${pkg.hasAlternate ? money(pkg.alternateTotal) : '—'}</td>
-    <td style="${tdR}">${totDeltaHtml}</td>
+    <td style="${tdR}">${totDeltaHtml}</td>` : ''}
     ${showStorage ? `<td style="${tdR}font-weight:700;">${totRet}</td><td style="${tdR}font-weight:700;">${totDet}</td>` : ''}
   </tr>`;
 
@@ -5114,14 +5345,16 @@ function buildCoverProjectSummaryTableHTML(areas, opts = {}) {
       <th style="${thR}">SF</th>
       <th style="${th}">Baseline</th>
       <th style="${th}">Alternate(s)</th>
-      <th style="${thR}">Baseline<br>${modeLabel}</th>
+      ${showCost ? `<th style="${thR}">Baseline<br>${modeLabel}</th>
       <th style="${thR}">Alternate<br>${modeLabel}</th>
-      <th style="${thR}">Δ Cost</th>
+      <th style="${thR}">Δ Cost</th>` : ''}
       ${showStorage ? `<th style="${thR}">Est. Ret.*<br><span style="font-weight:600;color:#888;">B / A</span></th><th style="${thR}">Est. Det.*<br><span style="font-weight:600;color:#888;">B / A</span></th>` : ''}
     </tr></thead>
     <tbody>${body}</tbody>
   </table>`;
-  html += `<div style="font-size:${roomy ? '11px' : '10px'};color:#666;margin-top:10px;line-height:1.45;">F&amp;I totals use ${modeLabel} pricing. Δ Cost = Alternate − Baseline.</div>`;
+  if (showCost) {
+    html += `<div style="font-size:${roomy ? '11px' : '10px'};color:#666;margin-top:10px;line-height:1.45;">F&amp;I totals use ${modeLabel} pricing. Δ Cost = Alternate − Baseline.</div>`;
+  }
   if (showStorage) {
     html += `<div style="font-size:${roomy ? '11px' : '10px'};color:#666;margin-top:6px;line-height:1.45;">${getEstimatedStorageFootnoteHTML()} Storage cells show Baseline / Alternate when they differ.</div>`;
   }
@@ -5156,10 +5389,13 @@ function buildSummaryAreaOfWorkGalleryHTML() {
 
   const n = imgs.length;
   const cols = n === 1 ? 1 : (n === 2 ? 2 : 3);
-  const maxH = n <= 1 ? '1.55in' : (n <= 3 ? '1.2in' : '1.0in');
+  // Fill the remainder of the letter page below the summary table: a single image gets
+  // the full width and most of the remaining height; multiples share it.
+  const maxH = n <= 1 ? '5.6in' : (n <= 2 ? '3.4in' : (n <= 3 ? '2.8in' : '2.2in'));
   const gap = n <= 3 ? '12px' : '10px';
+  const imgW = n <= 1 ? 'width:100%;' : 'width:100%;';
 
-  let html = `<div class="summary-aow-gallery" style="margin:28px 0 0;text-align:left;">
+  let html = `<div class="summary-aow-gallery" style="margin:22px 0 0;text-align:left;">
     ${buildReportPageTitleHTML('Area of work')}
     <div style="display:grid;grid-template-columns:repeat(${cols},minmax(0,1fr));gap:${gap};justify-items:start;align-items:start;">`;
 
@@ -5169,7 +5405,7 @@ function buildSummaryAreaOfWorkGalleryHTML() {
     html += `<div style="min-width:0;width:100%;max-width:100%;border:2px solid #8f8f86;background:#fff;text-align:left;">
       <div style="padding:5px 8px;background:#f3f3ee;border-bottom:1.5px solid #8f8f86;font-size:10px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:#2D2C27;">${label}</div>
       <div style="padding:8px;background:#fff;">
-        <img src="${src}" alt="${label}" style="display:block;margin:0;max-height:${maxH};max-width:100%;width:auto;height:auto;object-fit:contain;border:1px solid #d0d0c8;background:#fff;">
+        <img src="${src}" alt="${label}" style="display:block;margin:0 auto;max-height:${maxH};max-width:100%;${imgW}height:auto;object-fit:contain;border:1px solid #d0d0c8;background:#fff;">
       </div>
     </div>`;
   });
@@ -5185,7 +5421,9 @@ function buildReportSummaryPageHTML(projectInfo, areas, opts = {}) {
   html += buildComparePageHeaderHTML(projectInfo);
   html += buildReportPageTitleHTML(
     'Project Summary',
-    'Baseline vs alternate costs' + (includeNycDepStorage ? ' and estimated storage' : '') + ' by roof area'
+    excludePricing
+      ? ('Baseline vs alternate profiles' + (includeNycDepStorage ? ' and estimated storage' : '') + ' by roof area')
+      : ('Baseline vs alternate costs' + (includeNycDepStorage ? ' and estimated storage' : '') + ' by roof area')
   );
   html += buildCoverProjectSummaryTableHTML(areas, { omitHeading: true, roomy: true });
   html += buildSummaryAreaOfWorkGalleryHTML();
@@ -5232,7 +5470,7 @@ function buildReportCoverPageHTML(projectInfo, areas, opts = {}) {
   html += buildReportLogoBarHTML(true, { showPurpleRoof: showPR });
   html += `<div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#91A206;margin-top:4px;">${escapeReportText(company)}</div>`;
   html += '<div style="font-size:20px;font-weight:800;color:#2D2C27;margin:4px 0 2px;line-height:1.15;">Green Roof Profile Report</div>';
-  html += '<div style="font-size:11px;color:#666;margin-bottom:4px;">Comparison, profile properties, and supporting rates — for discussion and clarification</div>';
+  html += `<div style="font-size:11px;color:#666;margin-bottom:4px;">${excludePricing ? 'Comparison, profile properties, and supporting data' : 'Comparison, profile properties, and supporting rates'} — for discussion and clarification</div>`;
   html += `<div class="cover-hero"><img src="${coverAssemblyDataUrl || 'cover-assembly.png'}" alt="Green roof assembly"></div>`;
 
   html += `<div style="${sectionHead}">Project</div>`;
@@ -5249,13 +5487,14 @@ function buildReportCoverPageHTML(projectInfo, areas, opts = {}) {
   html += `<div style="${sectionHead}">How to use the side tabs</div>`;
   html += `<p style="${body}">Colored tabs on the right edge jump to a section in this PDF (after <strong>Print → Save as PDF</strong>) and in the on-screen preview.</p>`;
   html += `<ul style="${body}padding-left:18px;margin:6px 0 0;">
-    <li style="margin-bottom:5px;"><strong>Cover</strong> — this page: project information, pricing basis, and notes.</li>
-    <li style="margin-bottom:5px;"><strong>Summary</strong> — project cost and storage rollup by roof area.</li>
+    <li style="margin-bottom:5px;"><strong>Cover</strong> — this page: project information${excludePricing ? '' : ', pricing basis,'} and notes.</li>
+    <li style="margin-bottom:5px;"><strong>Summary</strong> — ${excludePricing ? 'roof areas, profiles' + (includeNycDepStorage ? ', and storage rollup' : '') : 'project cost and storage rollup'} by roof area.</li>
     <li style="margin-bottom:5px;"><strong>Green tabs</strong> — roof-area pages${compareCount ? ` (${compareCount} in this report)` : ' (shown when an area has two or more profiles, or a plan snip)'}.</li>
     <li style="margin-bottom:5px;"><strong>Purple tabs</strong> — unique profile property sheets (${uniqueNames.length} in this report). A profile used on more than one area is printed once.</li>
-    <li style="margin-bottom:0;"><strong>Appendix</strong> — material densities and cost rates used in this report.</li>
+    <li style="margin-bottom:0;"><strong>Appendix</strong> — material densities${excludePricing ? '' : ' and cost rates'} used in this report.</li>
   </ul>`;
 
+  if (!excludePricing) {
   html += `<div style="${sectionHead}">Pricing in this report</div>`;
   html += `<p style="${body}margin:0 0 6px;">Furnished-and-installed (F&amp;I) figures are estimates from the Appendix rates. They are not a bid.</p>`;
   html += `<ul style="${body}padding-left:18px;margin:0;">
@@ -5264,10 +5503,11 @@ function buildReportCoverPageHTML(projectInfo, areas, opts = {}) {
     <li style="margin-bottom:6px;">Confirm which path applies before budgeting or purchase.</li>
     <li style="margin-bottom:0;">This copy shows <strong>${pricingShown}</strong>.</li>
   </ul>`;
+  }
 
   html += `<div style="margin-top:14px;padding:8px 12px;border:1px solid #c8c8be;border-left:4px solid #91A206;background:#f7f7f3;">
     <div style="font-size:11px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;margin-bottom:4px;">For reference — to be clarified</div>
-    <p style="${body}">This report is for reference and discussion. Profile selection, assembly details, loads, drainage, and costs should be reviewed and clarified with ${escapeReportText(company)} before design, bidding, or construction. All supplemental information supporting this report is available upon request.</p>
+    <p style="${body}">This report is for reference and discussion. Profile selection, assembly details, loads, ${excludePricing ? 'and drainage' : 'drainage, and costs'} should be reviewed and clarified with ${escapeReportText(company)} before design, bidding, or construction. All supplemental information supporting this report is available upon request.</p>
   </div>`;
 
   html += '</div>';
@@ -5288,7 +5528,9 @@ function buildReportComparePageHTML(projectInfo, area, opts = {}) {
     ? `Profile Comparison — ${areaRef}`
     : `Roof Area Plan — ${areaRef}`;
   const pageSubtitle = hasCompare
-    ? 'Baseline vs alternate — weights, stormwater, and installed cost for this roof area'
+    ? (excludePricing
+        ? 'Baseline vs alternate — weights and stormwater for this roof area'
+        : 'Baseline vs alternate — weights, stormwater, and installed cost for this roof area')
     : 'Plan reference for this roof area';
   const topSnip = hasCompare
     ? (projectHasScopeImage()
@@ -5312,7 +5554,7 @@ function buildReportComparePageHTML(projectInfo, area, opts = {}) {
     html += buildReportComparisonTableHTML(area.profiles, roofArea, area.roleMap, area.baselineId);
     html += '</div>';
   }
-  if (opts.showProjectRollup) {
+  if (opts.showProjectRollup && !excludePricing) {
     html += buildCompactProjectRollupFooter();
   }
   if (!hasCompare && hasSnip) {
@@ -5406,6 +5648,21 @@ function syncNycDepStorageUI() {
 function setIncludeNycDepStorage(on) {
   includeNycDepStorage = !!on;
   syncNycDepStorageUI();
+  saveToStorage();
+  try { renderComparisonTable(); } catch (e) {}
+}
+
+function syncExcludePricingUI() {
+  const target = excludePricing ? 'none' : pricingMode;
+  const radio = document.querySelector(`input[name="pricingMode"][value="${target}"]`);
+  if (radio) radio.checked = true;
+  const note = document.getElementById('pricingModeNote');
+  if (note && excludePricing) note.textContent = 'No pricing in report';
+}
+
+function setExcludePricing(on) {
+  excludePricing = !!on;
+  syncExcludePricingUI();
   saveToStorage();
   try { renderComparisonTable(); } catch (e) {}
 }
@@ -5548,9 +5805,8 @@ function buildProfileSheetHTML(profile, projectInfo, opts = {}) {
   printContent += buildReportLogoBarHTML(true, { tight: true });
   printContent += buildReportPageTitleHTML(
     `Profile Properties — ${profile.name || 'Profile'}`,
-    projectInfo.name
-      ? `Assembly weights, stormwater, and cost detail · ${projectInfo.name}`
-      : 'Assembly weights, stormwater, and cost detail'
+    (excludePricing ? 'Assembly weights, stormwater, and layer detail' : 'Assembly weights, stormwater, and cost detail')
+      + (projectInfo.name ? ` · ${projectInfo.name}` : '')
   );
 
   const imgHTML = getProfileDiagramHTML(profile, { width: 360, height: 155 });
@@ -5630,8 +5886,8 @@ function buildProfileSheetHTML(profile, projectInfo, opts = {}) {
 
   // Cost detail — compact layer table
   printContent += `<div class="sheet-section sheet-section-cost" style="${sectionBox}">`;
-  printContent += `<div class="sheet-section-title" style="${sectionTitle}">Cost Detail</div>`;
-  printContent += buildLayerCostTable(profile, roofArea, pricingMode, { compact: true, reportSheet: true });
+  printContent += `<div class="sheet-section-title" style="${sectionTitle}">${excludePricing ? 'Assembly Layers' : 'Cost Detail'}</div>`;
+  printContent += buildLayerCostTable(profile, roofArea, pricingMode, { compact: true, reportSheet: true, noPricing: excludePricing });
   printContent += '</div>';
 
   printContent += `<div style="margin-top:6px; font-size:9px; color:#888; line-height:1.3;">${globalSettings.companyName || 'Sempergreen USA'} · ${projectInfo.date}</div>`;
@@ -5661,11 +5917,11 @@ function buildProjectTotalReportHTML(projectInfo) {
 }
 
 function buildReportNotesHTML(projectInfo, opts = {}) {
-  return buildReportAppendixHTML(projectInfo, { includePricing: true, ...opts });
+  return buildReportAppendixHTML(projectInfo, { includePricing: !excludePricing, ...opts });
 }
 
 function buildReportAppendixHTML(projectInfo, opts = {}) {
-  const includePricing = opts.includePricing !== false;
+  const includePricing = opts.includePricing !== false && !excludePricing;
   const gs = globalSettings;
   const mDirect = gs.markupDirect ?? 1.30;
   const mSSW = gs.markupSSW ?? 1.15;
@@ -5720,8 +5976,8 @@ function buildReportAppendixHTML(projectInfo, opts = {}) {
 
   html += '<div class="appendix-block" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;">';
   html += `<div style="padding:8px 10px;border:1px solid #c8c8be;background:#f7f7f3;">
-    <div style="${sectionHead}">Pricing notes</div>
-    <div style="font-size:11px;line-height:1.4;color:#333;">Industry averages for relative comparison — not a bid. Thicknesses, weights, and costs exclude insulation, waterproofing, and protection layers.</div>
+    <div style="${sectionHead}">${includePricing ? 'Pricing notes' : 'Assembly notes'}</div>
+    <div style="font-size:11px;line-height:1.4;color:#333;">${includePricing ? 'Industry averages for relative comparison — not a bid. Thicknesses, weights, and costs exclude' : 'Thicknesses and weights exclude'} insulation, waterproofing, and protection layers.</div>
   </div>`;
   html += `<div style="padding:8px 10px;border:1px solid #c8c8be;background:#f7f7f3;">
     <div style="${sectionHead}">Weights notes</div>
@@ -5765,7 +6021,7 @@ function buildReportAppendixHTML(projectInfo, opts = {}) {
 
   html += `<div class="appendix-block" style="font-size:11px;color:#555;line-height:1.45;padding-top:8px;border-top:1px solid #ddd;">
     Sources: GRS Lab #19100013-1 (ASTM E2399 &amp; F1815) · NMW Lab #17120050-1 (ASTM E2397) · HC/DL GRD Culpeper VA · VEG purple-roof.com/specs.
-    Confirm structural loads with the project SE. Costs are relative industry averages, not a job-specific bid.
+    Confirm structural loads with the project SE.${includePricing ? ' Costs are relative industry averages, not a job-specific bid.' : ''}
   </div>`;
   html += '</div>';
   return html;
@@ -6298,7 +6554,13 @@ function setupEventListeners() {
   // Pricing mode selector
   document.querySelectorAll('input[name="pricingMode"]').forEach(radio => {
     radio.addEventListener('change', (e) => {
-      applyPricingModeToUI(e.target.value);
+      if (e.target.value === 'none') {
+        excludePricing = true;
+        syncExcludePricingUI();
+      } else {
+        excludePricing = false;
+        applyPricingModeToUI(e.target.value);
+      }
       saveToStorage();
       renderProfileSelector();
       renderComparisonTable();
@@ -6938,11 +7200,11 @@ function renderRoofAreaPickers() {
     const safeName = (area.name || ('Roof Area ' + (idx + 1))).replace(/"/g, '&quot;');
 
     html += `<div class="roof-area-picker-card" style="margin-bottom:14px; border:1px solid #e4e4de; border-radius:4px; background:#fff; overflow:hidden;">`;
-    html += `<div style="padding:8px 12px 6px; background:#2D2C27; color:#fff; display:flex; align-items:center; justify-content:space-between; gap:10px;">
+    html += `<div class="rap-head" style="padding:8px 12px 6px; background:#2D2C27; color:#fff; display:flex; align-items:center; justify-content:space-between; gap:10px;">
       <div style="font-size:13px; font-weight:800; letter-spacing:.06em; text-transform:uppercase;">Area ${idx + 1}</div>
       ${areas.length > 1 ? `<span style="font-size:11px; opacity:.75;">of ${areas.length}</span>` : ''}
     </div>`;
-    html += `<div style="padding:8px 12px; background:#f3f3ee; border-bottom:1px solid #e4e4de; display:flex; flex-wrap:wrap; gap:8px 16px; align-items:center; justify-content:space-between;">
+    html += `<div class="rap-meta" style="padding:8px 12px; background:#f3f3ee; border-bottom:1px solid #e4e4de; display:flex; flex-wrap:wrap; gap:8px 16px; align-items:center; justify-content:space-between;">
       <label style="display:flex; align-items:center; gap:8px; font-size:12px; flex:1; min-width:180px;">
         <span style="color:#666; white-space:nowrap;">Name</span>
         <input type="text" value="${safeName}" class="field-input field-strong" style="flex:1; min-width:120px;"
@@ -6958,7 +7220,7 @@ function renderRoofAreaPickers() {
         ${includeProjectScopeImage
           ? `<span style="font-size:11px;color:#888;white-space:nowrap;">Using project area-of-work image</span>`
           : `<label style="display:flex; align-items:center; gap:6px; cursor:pointer; white-space:nowrap; font-weight:600; color:#2D2C27;">
-          <input type="checkbox" ${area.includePlanSnip ? 'checked' : ''} style="accent-color:#91A206;"
+          <input type="checkbox" ${area.includePlanSnip ? 'checked' : ''} style="accent-color:#6B2D8B;"
             onchange="onToggleAreaPlanSnip('${area.id}', this.checked)">
           Plan snip
         </label>`}
@@ -7389,6 +7651,7 @@ function buildComparisonTableHTML(area) {
 }
 
 function renderComparisonTable() {
+  if (qualifierLink) setTimeout(renderQualifierBar, 0);
   // Results render in report preview only, not on the input page.
 }
 
@@ -7448,8 +7711,9 @@ function buildLayerCostTable(profile, roofArea, pricingMode, opts = {}) {
   const area       = roofArea > 0 ? roofArea : 0;
   const accHeight  = getAccessoryHeightIn(profile);
 
-  const showDirect = (pricingMode !== 'ssw');
-  const showSSW    = (pricingMode !== 'direct');
+  const noPricing  = !!opts.noPricing;
+  const showDirect = !noPricing && (pricingMode !== 'ssw');
+  const showSSW    = !noPricing && (pricingMode !== 'direct');
 
   // Collect SF layers (structural) and accessory layers separately
   const sfLayers  = [];
@@ -7625,7 +7889,7 @@ function buildLayerCostTable(profile, roofArea, pricingMode, opts = {}) {
   if (showSSW) priceBits.push(`SSW F&amp;I <strong>${r2(totSSW)}/SF</strong>${fmtTotal(totSSW)}`);
   priceBits.push(`DP +${dpPct}%`);
   if (showSSW) priceBits.push(`SSW +${sswPct}%`);
-  const markupBlock = `<div style="margin-top:${summary ? '5px' : (tight ? '3px' : '6px')};font-size:${summary ? '10px' : (sheet ? '10px' : (tight ? '8px' : '10px'))};color:#444;line-height:1.35;">${priceBits.join(' · ')}</div>`;
+  const markupBlock = noPricing ? '' : `<div style="margin-top:${summary ? '5px' : (tight ? '3px' : '6px')};font-size:${summary ? '10px' : (sheet ? '10px' : (tight ? '8px' : '10px'))};color:#444;line-height:1.35;">${priceBits.join(' · ')}</div>`;
 
   const structNote = '';
 
@@ -8110,6 +8374,7 @@ function exportBackup() {
     activeAreaId,
     pricingMode,
     includeNycDepStorage,
+    excludePricing,
     includeProjectScopeImage,
     projectScopeImageData,
     projectScopeImageName,
@@ -8148,6 +8413,7 @@ function importBackup(e) {
       if (data.project) applyProjectFormData(data.project);
       if (data.pricingMode) applyPricingModeToUI(data.pricingMode);
       if (typeof data.includeNycDepStorage === 'boolean') includeNycDepStorage = data.includeNycDepStorage;
+      if (typeof data.excludePricing === 'boolean') excludePricing = data.excludePricing;
       if (typeof data.includeProjectScopeImage === 'boolean') includeProjectScopeImage = data.includeProjectScopeImage;
       if (typeof data.projectScopeImageData === 'string') projectScopeImageData = data.projectScopeImageData;
       if (typeof data.projectScopeImageName === 'string') projectScopeImageName = data.projectScopeImageName;
@@ -8169,6 +8435,8 @@ window.addEventListener('DOMContentLoaded', () => {
   });
 });
 </script>
+<footer class="app-footer">© <span id="footerYear"></span> Sempergreen USA · Roof Profile Comparison · <a href="https://purple-roof-qualifier.netlify.app/">Purple-Roof Qualifier</a></footer>
+<script>document.getElementById('footerYear').textContent = new Date().getFullYear();</script>
 
 </body>
 </html>
