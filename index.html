@@ -1085,6 +1085,10 @@
       .report-compare-page {
         padding: 0 0.82in 0 0.15in !important;
       }
+      .print-sheet.no-tabs,
+      .print-sheet.no-tabs:last-child {
+        padding: 0 0.15in !important;
+      }
       .report-tabs {
         position: absolute !important;
         top: 0.18in !important;
@@ -6137,6 +6141,48 @@ function showReportPreview() {
   });
 }
 
+/** One-page sheet for a single profile — no cover, summary, comparison or appendix. */
+function showProfileSheetPreview(profileId, opts = {}) {
+  const profile = (allProfiles || []).find(p => p.id === profileId)
+    || DEFAULT_PROFILES.find(p => p.id === profileId);
+  if (!profile) {
+    alert('Profile not found.');
+    return;
+  }
+  if (opts.closeDetail) closeProfileDetail();
+  ensureReportDateToday();
+  const info = Object.assign({}, getProjectInfoForReport());
+  if (/^unnamed project$/i.test(String(info.name || '').trim())) info.name = '';
+  const body = document.getElementById('reportPreviewBody');
+  const meta = document.getElementById('reportPreviewMeta');
+  const overlay = document.getElementById('reportPreview');
+  if (!body || !overlay) return;
+
+  body.innerHTML = '<div style="padding:24px;color:#666;font-size:13px;">Preparing profile sheet…</div>';
+  overlay.classList.add('active');
+  overlay.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+
+  const slug = (str) => String(str || '').replace(/[^a-z0-9-_]+/gi, '-').replace(/-+/g, '-').replace(/^-|-$/g, '').toLowerCase();
+  const sheet = buildProfileSheetHTML(profile, info, {
+    tabs: [],
+    sheetId: 'rpt-profile-single',
+    extraAnchors: [],
+    activeIds: []
+  }).replace('class="profile-sheet print-sheet"', 'class="profile-sheet print-sheet no-tabs"');
+  lastReportHTML = '<div class="report-print-root">' + sheet + '</div>';
+  lastReportFileName = (slug(profile.name) || 'profile') + '-profile-sheet.html';
+
+  inlineReportImages(lastReportHTML).then((html) => {
+    lastReportHTML = html;
+    body.innerHTML = html;
+    if (meta) meta.textContent = (profile.name || 'Profile') + ' · 1-page profile sheet';
+  }).catch(() => {
+    body.innerHTML = lastReportHTML;
+    if (meta) meta.textContent = (profile.name || 'Profile') + ' · 1-page profile sheet';
+  });
+}
+
 function closeReportPreview() {
   const overlay = document.getElementById('reportPreview');
   if (!overlay) return;
@@ -7165,7 +7211,10 @@ function buildSurfaceSelectOptions(selected) {
 
 function slotPreviewHTML(profileId) {
   // Input page stays minimal — full profile detail appears in Compare / Print only.
-  return '';
+  if (!profileId) return '';
+  return `<div style="margin-top:6px;font-size:11px;">
+    <a href="#" onclick="showProfileSheetPreview('${profileId}'); return false;" style="color:var(--text-secondary);text-decoration:underline;">Print 1-page profile sheet</a>
+  </div>`;
 }
 
 function renderSlotColumn(area, slotKey, label, color, removeHtml) {
@@ -8264,6 +8313,7 @@ function showProfileDetail(profile) {
 
     <div style="margin-top: 20px;">
       <button class="btn btn-primary" onclick="addProfileFromDetail('${profile.id}')">Add to Project</button>
+      <button class="btn btn-secondary" onclick="showProfileSheetPreview('${profile.id}', { closeDetail: true })" style="margin-left: 8px;">Print 1-Page Sheet</button>
       <button class="btn btn-secondary" onclick="closeProfileDetail()" style="margin-left: 8px;">Close</button>
     </div>
   `;
