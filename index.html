@@ -3269,7 +3269,7 @@ const DEFAULT_PROFILES = [
   { id:'PR-4-1-2', name:'Purple-Roof 4+1+2', group:'Purple-Roof—Vegetated', systemType:'purple_roof', surfaceType:'vegetation',
     meta:{ namedMedia:4, looseMedia:3.5, sedumInName:true, mineralWool:1, honeycomb:2, detentionLayer:true,
            paverThickness:null, pedestalHeight:null, airGap:null, aggregateDepth:null, filterFabric:false, status:'active',
-           note:'VERIFIED against Denver Self Storage project. F&I approximately $35.04/SF at 10,000 SF with standard assumptions. Growing zone: 4 in. 1 in NMW, 2 in HC, DL-5.' },
+           note:'Growing zone: 4 in. 1 in NMW, 2 in HC, DL-5.' },
     components:[{qbId:'QB1',qty:1},{qbId:'QB15',qty:1},{qbId:'QB30',qty:1},{qbId:'QB37',qty:1},{qbId:'QB40',qty:1},{qbId:'QB46',qty:0.1},{qbId:'QB60',qty:0.0005}]
   },
   { id:'PR-4-1-3', name:'Purple-Roof 4+1+3', group:'Purple-Roof—Vegetated', systemType:'purple_roof', surfaceType:'vegetation',
@@ -5814,10 +5814,10 @@ function getHoneycombDetentionNote(profile, roofArea) {
 
   const fmt = (n) => n.toLocaleString('en-US', { maximumFractionDigits: 1 });
   if (d.areaSF != null) {
-    return `Est. storage: ${fmt(d.cf)} CF (${fmt(d.gal)} gal) — ${fmt(d.areaSF)} SF × ${d.thicknessIn}" HC × ${d.voidPct}% void`
+    return `Est. detention: ${fmt(d.cf)} CF (${fmt(d.gal)} gal) — ${fmt(d.areaSF)} SF × ${d.thicknessIn}" HC × ${d.voidPct}% void`
       + ` (${d.cfPerSf.toFixed(3)} CF/SF · ${d.galPerSf.toFixed(2)} gal/SF).`;
   }
-  return `Est. storage: ${d.cfPerSf.toFixed(3)} CF/SF · ${d.galPerSf.toFixed(2)} gal/SF`
+  return `Est. detention: ${d.cfPerSf.toFixed(3)} CF/SF · ${d.galPerSf.toFixed(2)} gal/SF`
     + ` (${d.thicknessIn}" HC × ${d.voidPct}% void; enter roof area for project totals).`;
 }
 
@@ -5924,11 +5924,11 @@ function buildProfileSheetHTML(profile, projectInfo, opts = {}) {
     const storageVal = detentionData.areaSF != null
       ? `${fmt(detentionData.cf)} CF (${fmt(detentionData.gal)} gal)`
       : `${detentionData.cfPerSf.toFixed(3)} CF/SF · ${detentionData.galPerSf.toFixed(2)} gal/SF`;
-    printContent += propRow('Est. Storage', storageVal);
+    printContent += propRow('Est. Detention Storage', storageVal);
     const calcNote = detentionData.areaSF != null
       ? `${fmt(detentionData.areaSF)} SF × ${detentionData.thicknessIn}" HC × ${detentionData.voidPct}% void (${detentionData.cfPerSf.toFixed(3)} CF/SF · ${detentionData.galPerSf.toFixed(2)} gal/SF)`
       : `${detentionData.thicknessIn}" HC × ${detentionData.voidPct}% void — enter roof area for project totals`;
-    printContent += propRow('Calculation', calcNote);
+    printContent += propRow('Detention calc.', calcNote);
   }
   printContent += '</table>';
   if (nycDep && (nycDep.retention || nycDep.detention)) {
